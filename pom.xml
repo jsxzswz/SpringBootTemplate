@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>SpringBootTemplate</name>
-    <description>SpringBootTemplate project for Spring Boot</description>
+    <description>SpringBootTemplate project</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

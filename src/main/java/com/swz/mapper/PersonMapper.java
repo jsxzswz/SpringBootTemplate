@@ -15,32 +15,18 @@ import java.util.List;
 @Mapper//声明成mybatis Dao层的Bean，也可以在配置类上使用@MapperScan("com.swz.mapper")注解声明
 public interface PersonMapper {
 
-    int deleteByPrimaryKey(Long id);
+    int insertPerson(PersonDO person);
 
-    int insert(PersonDO record);
+    int updatePerson(PersonDO person);
 
-    int insertSelective(PersonDO record);
+    int deletePerson(Long id);
 
-    PersonDO selectByPrimaryKey(Long id);
+    int deletePersons(List ids);
 
-    int updateByPrimaryKeySelective(PersonDO record);
+    PersonDO getPerson(Long id);
 
-    int updateByPrimaryKey(PersonDO record);
+    List<PersonDO> listPersonsAll();
 
-    List<PersonDO> findByName(String name);
-
-    /**
-     * 获取所有数据
-     *
-     * @return
-     */
-    List<PersonDO> findAll();
-
-    /**
-     * 分页查询数据
-     *
-     * @return
-     */
-    Page<PersonDO> findByPage();
-
+    Page<PersonDO> listPersonsPage();
+    
 }

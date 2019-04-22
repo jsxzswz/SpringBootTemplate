@@ -461,7 +461,7 @@ public class RedisUtil {
     }
 
     /**
-     * 将list放入缓存
+     * 将值添加list放入缓存
      *
      * @param key   键
      * @param value 值
@@ -478,7 +478,7 @@ public class RedisUtil {
     }
 
     /**
-     * 将list放入缓存
+     * 将值添加list放入缓存
      *
      * @param key   键
      * @param value 值

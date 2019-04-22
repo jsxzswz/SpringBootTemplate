@@ -2,112 +2,79 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.swz.mapper.PersonMapper">
     <!-- 对这个语句开启二级缓存 -->
-    <cache type="com.swz.redis.MybatisRedisCache"/>
+    <!--<cache type="com.swz.redis.MybatisRedisCache"/>-->
 
-    <resultMap id="BaseResultMap" type="com.swz.pojo.domain.PersonDO">
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="age" property="age" jdbcType="INTEGER"/>
-        <result column="address" property="address" jdbcType="VARCHAR"/>
+    <resultMap id="PersonRS" type="com.swz.pojo.domain.PersonDO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="age" property="age"/>
+        <result column="address" property="address"/>
+        <result column="create_date" property="createDate"/>
+        <result column="update_date" property="updateDate"/>
+        <result column="status" property="status"/>
+        <result column="user_uuid" property="userUuid"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-    id, name, age, address
-  </sql>
+    <sql id="Person_Column_List">
+        id, name, age, address,DATE_FORMAT(create_date,'%Y-%m-%d %T') as create_date,DATE_FORMAT(update_date,'%Y-%m-%d %T') as update_date,status,user_uuid
+    </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
-        select
-        <include refid="Base_Column_List"/>
-        from person
-        where id = #{id,jdbcType=BIGINT}
-    </select>
-
-    <select id="findByName" resultMap="BaseResultMap" parameterType="java.lang.String">
-        select
-        <include refid="Base_Column_List"/>
-        from person
-        where name = #{name,jdbcType=VARCHAR}
-    </select>
-
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from person
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-
-    <insert id="insert" parameterType="com.swz.pojo.domain.PersonDO">
-        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
-        insert into person (name, age, address
-        )
-        values (#{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}
-        )
-    </insert>
-
-    <insert id="insertSelective" parameterType="com.swz.pojo.domain.PersonDO">
-        <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
+    <insert id="insertPerson" parameterType="com.swz.pojo.domain.PersonDO">
         insert into person
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="name != null">
-                name,
-            </if>
-            <if test="age != null">
-                age,
-            </if>
-            <if test="address != null">
-                address,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="name != null">
-                #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="age != null">
-                #{age,jdbcType=INTEGER},
-            </if>
-            <if test="address != null">
-                #{address,jdbcType=VARCHAR},
-            </if>
-        </trim>
+        values (null,#{name},#{age},#{address},now(),now(),'1',#{userUuid})
     </insert>
 
-    <update id="updateByPrimaryKeySelective" parameterType="com.swz.pojo.domain.PersonDO" flushCache="true">
+    <select id="getPerson" resultMap="PersonRS" parameterType="java.lang.Long">
+        select
+        <include refid="Person_Column_List"/>
+        from person
+        where id = #{id}
+    </select>
+
+    <delete id="updatePerson" parameterType="com.swz.pojo.domain.PersonDO">
         update person
         <set>
-            <if test="name != null">
-                name = #{name,jdbcType=VARCHAR},
-            </if>
-            <if test="age != null">
-                age = #{age,jdbcType=INTEGER},
-            </if>
-            <if test="address != null">
-                address = #{address,jdbcType=VARCHAR},
-            </if>
+            <if test="name != null">name = #{name},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="address != null">address = #{address},</if>
+            update_date = now()
         </set>
-        where id = #{id,jdbcType=BIGINT}
-    </update>
+        where id = #{id}
+    </delete>
 
-    <update id="updateByPrimaryKey" parameterType="com.swz.pojo.domain.PersonDO" flushCache="true">
-    update person
-    set name = #{name,jdbcType=VARCHAR},
-      age = #{age,jdbcType=INTEGER},
-      address = #{address,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <delete id="deletePerson" parameterType="java.lang.Long">
+        update person
+        set status = '0',
+        update_date = now()
+        where id = #{id}
+    </delete>
+
+    <delete id="deletePersons" parameterType="java.util.List">
+        update person
+        set status = '0',
+        update_date = now()
+        where id in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 
     <!-- 对这个语句useCache="true"默认是true，可以不写 -->
-    <select id="findAll" resultMap="BaseResultMap" useCache="true">
+    <select id="listPersonsAll" resultMap="PersonRS">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Person_Column_List"/>
         from person
+        where status = '1'
+        order by id desc
     </select>
 
-    <!-- 对这个语句禁用二级缓存 -->
-    <select id="findByPage" resultMap="BaseResultMap" useCache="false">
+    <!-- 对这个语句useCache="true"默认是true，可以不写 -->
+    <select id="listPersonsPage" resultMap="PersonRS">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Person_Column_List"/>
         from person
+        where status = '1'
+        order by id desc
     </select>
 </mapper>

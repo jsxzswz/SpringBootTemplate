@@ -32,7 +32,7 @@ public class ScheduleTask {
     }
 
     public void Hello2() {
-        logger.info("######查询用户信息：{}######", JSONObject.toJSON(personService.findAll()));
+        logger.info("######查询用户信息：{}######", JSONObject.toJSON(personService.listPersonsAll()));
     }
 
 }

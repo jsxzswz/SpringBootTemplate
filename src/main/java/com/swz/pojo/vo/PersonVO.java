@@ -1,6 +1,7 @@
 package com.swz.pojo.vo;
 
-import com.swz.pojo.dto.PersonDTO;
+import com.swz.pojo.dto.response.PersonResDTO;
+import lombok.Data;
 
 import java.io.Serializable;
 
@@ -10,16 +11,10 @@ import java.io.Serializable;
  * @author: swz
  * @date: 2018/7/23 10:11
  */
-public class PersonVO implements Serializable{
+@Data
+public class PersonVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-   private PersonDTO personDTO;
+    private PersonResDTO personResDTO;
 
-    public PersonDTO getPersonDTO() {
-        return personDTO;
-    }
-
-    public void setPersonDTO(PersonDTO personDTO) {
-        this.personDTO = personDTO;
-    }
 }

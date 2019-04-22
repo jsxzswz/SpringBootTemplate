@@ -22,4 +22,12 @@ public class PersonDO implements Serializable{
 
     private String address;//地址
 
+    private String createDate;//创建时间
+
+    private String updateDate;//更新时间
+
+    private String status;//状态
+
+    private String userUuid;//用户唯一标识
+
 }

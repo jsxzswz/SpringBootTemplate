@@ -6,18 +6,23 @@ package com.swz.redis.key;
  * @author: swz
  * @date: 2019/4/10 14:57
  */
-public class UserKey extends BasePrefix {
+public class PersonKey extends BasePrefix {
 
     /**
      * 防止被外面实例化
      */
-    private UserKey(String prefix) {
+    private PersonKey(String prefix) {
         super(prefix);
     }
 
     /**
      * 需要缓存的字段
      */
-    public static UserKey userId = new UserKey("userId_");
+    public static PersonKey personId = new PersonKey("personId_");
+
+    /**
+     * 需要缓存的字段
+     */
+    public static PersonKey personList = new PersonKey("personList");
 
 }

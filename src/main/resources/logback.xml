@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration  scan="true" scanPeriod="60 seconds" debug="false">
-	<contextName>springBootDemo</contextName>
+	<contextName>springBootTemplate</contextName>
 	<property name="log.path" value="E:/log" />
 	<!--输出到控制台-->
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -25,7 +25,6 @@
     <springProfile name="dev">
         <root level="INFO">
             <appender-ref ref="CONSOLE" />
-            <appender-ref ref="FILE" />
         </root>
     </springProfile>
 

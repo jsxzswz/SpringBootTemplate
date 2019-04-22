@@ -8,10 +8,10 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class SpringBootDemoApplication {
+public class SpringBootTemplateApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootDemoApplication.class, args);
+        SpringApplication.run(SpringBootTemplateApplication.class, args);
     }
 
     @Bean

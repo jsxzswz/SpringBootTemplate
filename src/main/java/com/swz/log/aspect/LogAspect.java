@@ -36,7 +36,7 @@ public class LogAspect {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static final ThreadLocal<LocalDateTime> beginTimeThreadLocal = new NamedThreadLocal<>("ThreadLocal beginTime");
-    private static final ThreadLocal<Log> logThreadLocal = new NamedThreadLocal<Log>("ThreadLocal log");
+    private static final ThreadLocal<Log> logThreadLocal = new NamedThreadLocal<>("ThreadLocal log");
     private static final DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
 
     @Autowired(required = false)

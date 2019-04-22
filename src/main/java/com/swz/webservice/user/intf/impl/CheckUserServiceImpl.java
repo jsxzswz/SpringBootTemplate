@@ -1,7 +1,7 @@
 package com.swz.webservice.user.intf.impl;
 
 import com.swz.pojo.domain.PersonDO;
-import com.swz.pojo.dto.PersonDTO;
+import com.swz.pojo.dto.response.PersonResDTO;
 import com.swz.service.person.PersonService;
 import com.swz.webservice.user.bean.*;
 import com.swz.webservice.user.intf.CheckUserService;
@@ -40,9 +40,6 @@ public class CheckUserServiceImpl implements CheckUserService {
         // 定义响应体信息
         CheckUserResponseDTO responseBody = new CheckUserResponseDTO();
 
-        List<CheckUserDTO> checkUserList = null;
-
-        List<PersonDO> userList = null;
         logger.info("******************请求查询用户信息，开始*******************");
         try {
             if (requestBody == null) {
@@ -55,12 +52,12 @@ public class CheckUserServiceImpl implements CheckUserService {
                     responseHead.setMessage("传送的姓名不能为空！");
                     response.setResponseHead(responseHead);
                 } else {
-                    PersonDTO personDTO = personService.findByName(requestBody.getName());
-                    userList = personDTO.getPersonBO().getPersonDOList();
+                    PersonResDTO personResDTO = personService.listPersonsAll();
+                    List<PersonDO> userList = personResDTO.getPersonList();
                     if (userList != null && userList.size() != 0) {
                         responseHead.setStatus(1);
                         responseHead.setMessage("获取用户信息成功！");
-                        checkUserList = this.convertToCheckUserDTO(userList);
+                        List<CheckUserDTO> checkUserList = this.convertToCheckUserDTO(userList);
                         responseBody.setCheckUserList(checkUserList);
                         response.setResponseHead(responseHead);
                         response.setResponseBody(responseBody);

@@ -1,5 +1,6 @@
 package com.swz.config;
 
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.core.io.Resource;
 
 @Configuration // 声明当前类是一个配置类，相当于Spring配置的XML文件
 @PropertySource("classpath:config/system.properties") // 指定文件地址
+@Data
 public class PropertyConfig {
     @Value("注入普通字符串") // 注入普通字符串
     private String normal;
@@ -37,28 +39,5 @@ public class PropertyConfig {
 
     @Autowired // Properties可以从Environment获得
     private Environment environment;
-
-    public String getSmtpServer() {
-        return smtpServer;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    @Override
-    public String toString() {
-        return "PropertyConfig [normal=" + normal + ", osName=" + osName + ", randomNumber=" + randomNumber
-                + ", bookAuthor=" + bookAuthor
-                + ", environment=" + environment + "]";
-    }
 
 }
