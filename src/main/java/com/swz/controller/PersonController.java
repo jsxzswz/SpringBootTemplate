@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -70,7 +69,7 @@ public class PersonController {
 
     @RequestMapping("/addPerson")
     @ControllerLog(description = "新增用户")
-    public String addPerson(@RequestParam("personReqDTO") PersonReqDTO personReqDTO) {
+    public String addPerson(@RequestBody PersonReqDTO personReqDTO) {
         ResJsonVO resJsonVO = new ResJsonVO();
         try {
             PersonDO person = new PersonDO();
@@ -91,7 +90,7 @@ public class PersonController {
     }
 
     @RequestMapping("/getPerson")
-    public String getPerson(@RequestParam("personReqDTO") PersonReqDTO personReqDTO) {
+    public String getPerson(@RequestBody PersonReqDTO personReqDTO) {
         ResJsonVO resJsonVO = new ResJsonVO();
         try {
             PersonVO personVO = new PersonVO();
@@ -110,7 +109,7 @@ public class PersonController {
 
     @RequestMapping("/updatePerson")
     @ControllerLog(description = "更新用户")
-    public String updatePerson(@RequestParam("personReqDTO") PersonReqDTO personReqDTO) {
+    public String updatePerson(@RequestBody PersonReqDTO personReqDTO) {
         ResJsonVO resJsonVO = new ResJsonVO();
         try {
             PersonDO person = new PersonDO();
@@ -131,7 +130,7 @@ public class PersonController {
 
     @RequestMapping("/deletePerson")
     @ControllerLog(description = "删除用户")
-    public String deletePerson(@RequestParam("personReqDTO") PersonReqDTO personReqDTO) {
+    public String deletePerson(@RequestBody PersonReqDTO personReqDTO) {
         ResJsonVO resJsonVO = new ResJsonVO();
         try {
             personService.deletePerson(personReqDTO);
@@ -148,7 +147,7 @@ public class PersonController {
 
     @RequestMapping("/deletePersons")
     @ControllerLog(description = "批量删除用户")
-    public String deletePersons(@RequestParam("personReqDTO") PersonReqDTO personReqDTO) {
+    public String deletePersons(@RequestBody PersonReqDTO personReqDTO) {
         ResJsonVO resJsonVO = new ResJsonVO();
         try {
             personService.deletePersons(personReqDTO);
